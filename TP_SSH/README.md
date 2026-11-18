@@ -13,7 +13,7 @@
   </tr>
 </table>
 
-# 🔐 TP : Mise en place du protocole SSH
+# TP : Mise en place du protocole SSH
 
 **Accès distant sécurisé, authentification par clés et tunnels SSH (HTTP & MariaDB)**
 
@@ -31,7 +31,7 @@
 
 ---
 
-## 📑 Sommaire
+## Sommaire
 
 1. [Introduction](#1-introduction)
 2. [Environnement de travail](#2-environnement-de-travail)
@@ -54,7 +54,7 @@ SSH propose deux modes d'authentification :
 
 SSH permet aussi de créer des **tunnels** (redirection de ports) pour faire transiter d'autres protocoles (HTTP, MySQL…) dans une connexion chiffrée.
 
-> **🎯 Objectif du TP**
+> **Objectif du TP**
 > Comprendre comment utiliser SSH pour sécuriser l'accès à une machine distante : installer et vérifier un serveur OpenSSH, s'y connecter depuis un client, mettre en place l'authentification par clés, puis créer des tunnels SSH vers un serveur web Apache et une base de données MariaDB.
 
 ---
@@ -126,7 +126,7 @@ ip a
 
 Le port 22 est à l'état `LISTEN`. L'interface `enp0s3` du serveur porte l'adresse **`192.168.1.20/24`**, que le client utilisera pour se connecter.
 
-> **ℹ️ Remarque**
+> **Remarque**
 > Le TP utilise `netstat -anp | grep -w 22`. La commande `ss -tlnp` est son équivalent moderne : sur les distributions récentes, `netstat` (paquet `net-tools`) n'est plus installé par défaut.
 
 ---
@@ -201,7 +201,7 @@ chmod 700 ~/.ssh
 chmod 600 ~/.ssh/authorized_keys
 ```
 
-> **🔑 Principe de l'authentification par clé**
+> **Principe de l'authentification par clé**
 > Lors de la connexion, le serveur SSH de destination envoie un défi que seul le détenteur de la clé privée peut signer. Il vérifie la signature avec la clé publique présente dans `authorized_keys` : si elle est valide, l'accès est accordé sans mot de passe. La commande `ssh-copy-id utilisateur@ip` automatise la copie et l'ajout de la clé.
 
 ---
@@ -281,7 +281,7 @@ SHOW DATABASES;
 
 Le client se connecte au serveur MariaDB 10.11.14 et `SHOW DATABASES` liste les bases du serveur (`information_schema`, `mysql`, `performance_schema`, `sys`).
 
-> **💡 Intérêt du tunnel**
+> **Intérêt du tunnel**
 > Par défaut, MariaDB n'écoute que sur l'interface locale `127.0.0.1` du serveur : elle n'est donc pas joignable directement depuis le réseau. Grâce au tunnel, le client y accède comme s'il était local, sans ouvrir le port 3306 sur le réseau et avec des échanges entièrement chiffrés. Seul le port 22 a besoin d'être autorisé.
 
 ---
@@ -290,10 +290,10 @@ Le client se connecte au serveur MariaDB 10.11.14 et `SHOW DATABASES` liste les 
 
 Ce TP a permis de mettre en œuvre les principales fonctionnalités du protocole SSH :
 
-- ✅ l'installation, l'activation et la vérification d'un serveur OpenSSH sur Ubuntu ;
-- ✅ la connexion à distance depuis un client Windows, avec vérification de l'empreinte du serveur ;
-- ✅ la génération d'une paire de clés RSA et le transfert de la clé publique, base de l'authentification sans mot de passe ;
-- ✅ la création de tunnels SSH donnant un accès chiffré à un serveur web Apache (port 1024 → 80) et à une base MariaDB (port 3307 → 3306).
+- l'installation, l'activation et la vérification d'un serveur OpenSSH sur Ubuntu ;
+- la connexion à distance depuis un client Windows, avec vérification de l'empreinte du serveur ;
+- la génération d'une paire de clés RSA et le transfert de la clé publique, base de l'authentification sans mot de passe ;
+- la création de tunnels SSH donnant un accès chiffré à un serveur web Apache (port 1024 → 80) et à une base MariaDB (port 3307 → 3306).
 
 SSH s'impose ainsi comme un outil essentiel de l'administration système : il sécurise l'accès distant, simplifie l'authentification grâce aux clés et protège des services qui ne sont pas chiffrés à l'origine, tout en limitant les ports exposés sur le réseau.
 
